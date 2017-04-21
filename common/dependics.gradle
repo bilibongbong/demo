@@ -1,0 +1,88 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenLocal()
+    }
+}
+
+ext{
+    //android platform
+    androidBuildToolsVersion = "25.0.2"
+    androidMinSdkVersion = 15
+    androidTargetSdkVersion = 23
+    androidCompileSdkVersion = 25
+
+    //Libraries
+    daggerVersion = '2.10'
+    butterKnifeVersion = '7.0.1'
+    supportLibVersion = '25.1.0'
+    rxJavaVersion = '2.0.2'
+    rxAndroidVersion = '2.0.1'
+    javaxAnnotationVersion = '1.0'
+    javaxInjectVersion = '1'
+    gsonVersion = '2.3'
+    retrofitVersion = '2.2.0'
+    buttrknifeVersion = '8.5.1'
+}
+
+android {
+    compileSdkVersion androidCompileSdkVersion
+    buildToolsVersion androidBuildToolsVersion
+    defaultConfig {
+        minSdkVersion androidMinSdkVersion
+        targetSdkVersion androidTargetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++11 -frtti -fexceptions"
+            }
+        }
+    }
+
+    compileOptions{
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+}
+
+dependencies{
+    provided "javax.annotation:jsr250-api:${javaxAnnotationVersion}"
+    compile "javax.inject:javax.inject:${javaxInjectVersion}"
+    compile "com.google.code.gson:gson:${gsonVersion}"
+    compile "io.reactivex.rxjava2:rxjava:${rxJavaVersion}"
+    compile "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}"
+    compile "com.android.support:support-annotations:${supportLibVersion}"
+    compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    compile "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
+    compile "com.android.support:appcompat-v7:${supportLibVersion}"
+    compile "com.android.support:design:${supportLibVersion}"
+
+
+    //dagger
+    compile "com.google.dagger:dagger:${daggerVersion}"
+    annotationProcessor ("com.google.dagger:dagger-compiler:${daggerVersion}",{
+        exclude(module:'jsr305')
+    })
+    compile ("com.google.dagger:dagger-android:${daggerVersion}",{
+        exclude(module:'jsr305')
+    })
+    //if you use the support libraries
+    compile ("com.google.dagger:dagger-android-support:${daggerVersion}",{
+        exclude(module:'jsr305')
+    })
+    annotationProcessor("com.google.dagger:dagger-android-processor:${daggerVersion}", {
+        exclude(module:'jsr305')
+    })
+
+    annotationProcessor ("com.google.dagger:dagger-android-processor:${daggerVersion}", {
+        exclude(module:'jsr305')
+    })
+
+    //butter knife
+    compile "com.jakewharton:butterknife:${buttrknifeVersion}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${buttrknifeVersion}"
+
+    androidTestCompile "com.android.support:support-annotations:${supportLibVersion}";
+}
